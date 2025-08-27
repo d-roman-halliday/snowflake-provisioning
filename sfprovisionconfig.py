@@ -514,12 +514,19 @@ class SfProvisionConfig():
             print(grants)
 
     def print_drop(self):
-        for grant_revokes in self.revoke_obj_grants[::-1]:
-            print(grant_revokes)
-        print()
-        for role_revoke in self.revoke_role_grants[::-1]:
-            print(role_revoke)
-        print()
+        # For now, when drop object is used, the revoke is superfluous (wastes credits)
+        # It also generates some errors if something was already removed.
+        # Ideally this should be configured somewhere but setting a boolean here for now
+        revoke_obj_grants = False
+        revoke_role_grants = False
+        if revoke_obj_grants:
+            for grant_revokes in self.revoke_obj_grants[::-1]:
+                print(grant_revokes)
+            print()
+        if revoke_role_grants:
+            for role_revoke in self.revoke_role_grants[::-1]:
+                print(role_revoke)
+            print()
         for drops in self.drop_objects[::-1]:
             print(drops)
         
